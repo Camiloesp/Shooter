@@ -74,10 +74,28 @@ private:
 	/* Smoke trail for bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UParticleSystem* BeamParticles;
+
+	/* True when aiming */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	bool bAiming;
+
+	/* Default camera field of view value */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float CameraDefaultFOV; // FOV = Field of view.
+	/* Field of view value for when zoomed in. */
+	float CameraZoomedFOV;
+	/* Current FOV this frame */
+	float CameraCurrentFOV;
+	/* Interp Speed for zooming when aiming */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float ZoomInterpSpeed;
+
 public:
 
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; } /* Returns CameraBoom subobject */
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; } /* Returns FollowCamera subobject */
+	FORCEINLINE bool GetAiming() const { return bAiming; }
+
 protected:
 
 	/* Called for forward/Backwards input */
@@ -102,4 +120,10 @@ protected:
 	void FireWeapon();
 
 	bool GetBeamEndLocation(const FVector& MuzzleSocketLocation, FVector& OutBeamLocation);
+
+	/* Set bAiming to true or false with button pressed */
+	void AimingButtonPressed();
+	void AimingButtonReleased();
+
+	void CameraInterpZoom(float DeltaTime);
 };
