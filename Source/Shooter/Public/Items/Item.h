@@ -8,6 +8,7 @@
 
 class UBoxComponent;
 class USkeletalMeshComponent;
+class UWidgetComponent;
 
 UCLASS()
 class SHOOTER_API AItem : public AActor
@@ -37,7 +38,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item Properties", meta = (AllowPrivateAccess = "true"))
 	UBoxComponent* CollisionBox;
 
-
+	/* Pop-up widget for when the player looks at the item */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item Properties", meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent* PickupWidget;
 	
 public:
 protected:
